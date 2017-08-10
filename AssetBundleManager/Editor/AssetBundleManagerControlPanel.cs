@@ -210,7 +210,6 @@ namespace AssetBundles.Manager {
                     editorIndex = (Settings.CurrentSetting == null) ? -1 : Settings.ServerSettings.IndexOf(Settings.CurrentSetting) + 2;
                 }
 
-                int devIndex = (Settings.DevelopmentBuildSetting == null) ? -1 : Settings.ServerSettings.IndexOf(Settings.DevelopmentBuildSetting);
                 int releaseIndex = (Settings.ReleaseBuildSetting == null) ? -1 : Settings.ServerSettings.IndexOf(Settings.ReleaseBuildSetting);
                 int streamingIndex = (Settings.StreamingAssetsSetting == null) ? -1 : Settings.ServerSettings.IndexOf(Settings.StreamingAssetsSetting);
 
@@ -220,7 +219,6 @@ namespace AssetBundles.Manager {
                 GUILayout.Space(12f);
                 GUILayout.Label ("Player Server Setting", "BoldLabel");
 
-                var newDevIndex = EditorGUILayout.Popup("Development Build", devIndex, names);
                 var newReleaseIndex = EditorGUILayout.Popup("Release Build", releaseIndex, names);
                 var newStreamingAssetsIndex = EditorGUILayout.Popup("Streaming Assets", streamingIndex, names);
 
@@ -232,11 +230,6 @@ namespace AssetBundles.Manager {
                     } else {
                         Settings.Mode = Settings.AssetBundleManagerMode.Server;
                         Settings.CurrentSetting = Settings.ServerSettings [newEditorIndex - 2];
-                    }
-                }
-                if (newDevIndex != devIndex) {
-                    if (Settings.ServerSettings.Count > newDevIndex) {
-                        Settings.DevelopmentBuildSetting = Settings.ServerSettings [newDevIndex];
                     }
                 }
                 if (newReleaseIndex != releaseIndex) {

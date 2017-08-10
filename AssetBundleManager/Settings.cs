@@ -62,7 +62,6 @@ namespace AssetBundles.Manager {
 
         [SerializeField] List<ServerSetting> m_settings;
         [SerializeField] ServerSetting m_currentSetting;
-        [SerializeField] ServerSetting m_devBuildSetting;
         [SerializeField] ServerSetting m_releaseBuildSetting;
         [SerializeField] ServerSetting m_streamingAssetSetting;
         [SerializeField] AssetBundleManagerMode m_mode;
@@ -131,8 +130,6 @@ namespace AssetBundles.Manager {
             get {
                 #if UNITY_EDITOR
                 return GetSettings ().m_currentSetting;
-                #elif DEBUG
-                return DevelopmentBuildSetting;
                 #else
                 return ReleaseBuildSetting;
                 #endif
@@ -164,19 +161,6 @@ namespace AssetBundles.Manager {
             }
         }
         #endif
-
-        public static ServerSetting DevelopmentBuildSetting {
-            get {
-                return GetSettings ().m_devBuildSetting;
-            }
-            #if UNITY_EDITOR
-            set {
-                var s = GetSettings();
-                s.m_devBuildSetting = value;
-                EditorUtility.SetDirty(s);
-            }
-            #endif
-        }
 
         public static ServerSetting ReleaseBuildSetting {
             get {
@@ -248,9 +232,6 @@ namespace AssetBundles.Manager {
             s.m_settings.Remove(removingSetting);
             if(s.m_currentSetting == removingSetting) {
                 s.m_currentSetting = null;
-            }
-            if(s.m_devBuildSetting == removingSetting) {
-                s.m_devBuildSetting = null;
             }
             if(s.m_releaseBuildSetting == removingSetting) {
                 s.m_releaseBuildSetting = null;
